@@ -1,0 +1,6 @@
+{
+    "telegram_api_token": "",
+    "telegram_bot_username": "",
+    "maxium_size": 10485760,
+    "ipfs_api_host":"http://127.0.0.1:5010"
+}
