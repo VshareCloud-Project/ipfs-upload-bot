@@ -1,7 +1,12 @@
 {
+    "secret_key": "1145141919810",
     "telegram_api_token": "",
     "telegram_bot_username": "",
     "telegram_bot_server":null,
     "maxium_size": 10485760,
-    "ipfs_api_host":"http://127.0.0.1:5010"
+    "ipfs_api_host":"http://127.0.0.1:5010",
+    "log_level":"DEBUG",
+    "log_file":"/var/log/ipfs-upload-bot.log",
+    "tmp_path":"/tmp/uploadbot",
+    "chunk_size": 2000000
 }
