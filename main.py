@@ -19,6 +19,7 @@ logging.getLogger('').addHandler(file_log_handler)
 if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None:
     from telebot import apihelper
     apihelper.API_URL = c.getkey("telegram_bot_server")
+    apihelper.READ_TIMEOUT = c.getkey("timeout")
     fileurl = c.getkey("telegram_bot_server_file")
 else:
     c.setkey("telegram_bot_server", "https://api.telegram.org/bot{0}/{1}")
@@ -37,7 +38,7 @@ def handle_docs(message):
     if file_size > c.getkey("maxium_size"):
         bot.reply_to(message, "File size is too big")
         return
-    file_info = bot.get_file(getattr(message,stype).file_id)
+    file_info = bot.get_file(getattr(message,stype).file_id,timeout=c.getkey("timeout"))
     if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}":
         newfile = file_info.file_path
     else:
@@ -112,3 +113,5 @@ for file in list_file:
             os.remove(os.path.join(c.getkey("tmp_path"),file))
         except FileNotFoundError:
             pass
+if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}":
+    bot.log_out()
