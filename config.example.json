@@ -3,6 +3,7 @@
     "telegram_api_token": "",
     "telegram_bot_username": "",
     "telegram_bot_server":null,
+    "telegram_bot_server_file":null,
     "maxium_size": 10485760,
     "ipfs_api_host":"http://127.0.0.1:5010",
     "log_level":"DEBUG",
