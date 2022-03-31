@@ -39,13 +39,13 @@ def handle_docs(message):
     #file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(c.getkey("telegram_api_token"), file_info.file_path))
     dl_url = c.getkey("telegram_bot_server").format(c.getkey("telegram_api_token"), file_info.file_path)
     nuuid = genuuid() + ".ibin"
-    with requests.get(dl_url, stream=True) as req:
+    with requests.get(dl_url, stream=True,timeout=c.getkey("timeout")) as req:
         with open(os.path.join(c.getkey("tmp_path"),nuuid), 'wb') as f:
             for chunk in req.iter_content(chunk_size=c.getkey("chunk_size")):
                 if chunk:
                     f.write(chunk)
     #params = urllib.parse.urlencode({"pin":True,"path":dl_url}, quote_via=urllib.parse.quote)
-    ret = requests.post(c.getkey("ipfs_api_host")+"/api/v0/add?pin=true", files={'file': open(os.path.join(c.getkey("tmp_path"),nuuid), 'rb')})
+    ret = requests.post(c.getkey("ipfs_api_host")+"/api/v0/add?pin=true", files={'file': open(os.path.join(c.getkey("tmp_path"),nuuid), 'rb')},timeout=c.getkey("timeout"))
     if ret.status_code != 200:
         bot.reply_to(message, "Error: "+ret.text)
         return
@@ -70,13 +70,13 @@ def handle_photo(message):
     #file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(c.getkey("telegram_api_token"), file_info.file_path))
     dl_url = c.getkey("telegram_bot_server").format(c.getkey("telegram_api_token"), file_info.file_path)
     nuuid = genuuid() + ".ibin"
-    with requests.get(dl_url, stream=True) as req:
+    with requests.get(dl_url, stream=True,timeout=c.getkey("timeout")) as req:
         with open(os.path.join(c.getkey("tmp_path"),nuuid), 'wb') as f:
             for chunk in req.iter_content(chunk_size=c.getkey("chunk_size")):
                 if chunk:
                     f.write(chunk)
     #params = urllib.parse.urlencode({"pin":True,"path":dl_url}, quote_via=urllib.parse.quote)
-    ret = requests.post(c.getkey("ipfs_api_host")+"/api/v0/add?pin=true", files={'file': open(os.path.join(c.getkey("tmp_path"),nuuid), 'rb')})
+    ret = requests.post(c.getkey("ipfs_api_host")+"/api/v0/add?pin=true", files={'file': open(os.path.join(c.getkey("tmp_path"),nuuid), 'rb')},timeout=c.getkey("timeout"))
     if ret.status_code != 200:
         bot.reply_to(message, "Error: "+ret.text)
         return
