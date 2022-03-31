@@ -8,5 +8,6 @@
     "log_level":"DEBUG",
     "log_file":"/var/log/ipfs-upload-bot.log",
     "tmp_path":"/tmp/uploadbot",
-    "chunk_size": 2000000
+    "chunk_size": 2000000,
+    "timeout":3600
 }
