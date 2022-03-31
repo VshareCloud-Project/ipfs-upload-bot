@@ -39,7 +39,7 @@ def handle_docs(message):
         return
     file_info = bot.get_file(getattr(message,stype).file_id)
     if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}":
-        newfile = file.path
+        newfile = file_info.file_path
     else:
         #file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(c.getkey("telegram_api_token"), file_info.file_path))
         dl_url =  fileurl +"/"+ file_info.file_path
@@ -75,7 +75,7 @@ def handle_photo(message):
         return
     file_info = bot.get_file(message.photo[-1].file_id)
     if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}":
-        newfile = file.path
+        newfile = file_info.file_path
     else:
         #file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(c.getkey("telegram_api_token"), file_info.file_path))
         dl_url =  fileurl +"/"+ file_info.file_path
