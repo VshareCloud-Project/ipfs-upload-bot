@@ -1,0 +1,17 @@
+[Unit]
+Description=Auto Add IPFS bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/ipfs-upload-bot
+ExecStart=/usr/bin/python3 main.py
+TimeoutStopSec=300s
+Restart=always
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
