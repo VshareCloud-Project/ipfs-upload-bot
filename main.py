@@ -2,6 +2,9 @@ import telebot
 import configloader
 import requests
 c = configloader.config()
+if c.getkey("telegram_bot_server") != "" or c.getkey("telegram_bot_server") is not None:
+    from telebot import apihelper
+    apihelper.API_URL = c.getkey("telegram_bot_server")
 bot = telebot.TeleBot(c.getkey("telegram_api_token"))
 @bot.message_handler(content_types=['document','audio','video'])
 def handle_docs(message):
