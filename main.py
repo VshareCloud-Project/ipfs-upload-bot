@@ -62,10 +62,11 @@ def handle_docs(message):
             bot.reply_to(message, "Your CID is "+ret["Hash"])
         else:
             bot.reply_to(message, "Error: "+ret)
-    try:
-        os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
-    except FileNotFoundError:
-        pass
+    if not (c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}"):
+        try:
+            os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
+        except FileNotFoundError:
+            pass
 
 @bot.message_handler(content_types=['photo'])
 def handle_photo(message):
@@ -98,10 +99,11 @@ def handle_photo(message):
             bot.reply_to(message, "Your CID is "+ret["Hash"])
         else:
             bot.reply_to(message, "Error: "+ret)
-    try:
-        os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
-    except FileNotFoundError:
-        pass
+    if not (c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}"):
+        try:
+            os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
+        except FileNotFoundError:
+            pass
 bot.infinity_polling()
 list_file = os.listdir(c.getkey("tmp_path"))
 for file in list_file:
