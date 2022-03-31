@@ -107,7 +107,7 @@ def handle_photo(message):
             pass
 @bot.message_handler(commands=['start',"help"])
 def handle_start(message):
-    bot.reply_to(message, "Send me a file to add to IPFS, The file will be kept for one day, Please add the cid to @vsharecloud_bot to keep it permanently!")
+    bot.reply_to(message, "Send me a file to add to IPFS, The file will be kept for one day, Please add the cid to @vsharecloud_bot to keep it permanently!\n给我发送文件以添加至IPFS网络，文件将保留一天，请将CID添加至 @vsharecloud_bot 以永久保存！")
 bot.infinity_polling()
 list_file = os.listdir(c.getkey("tmp_path"))
 for file in list_file:
