@@ -105,6 +105,9 @@ def handle_photo(message):
             os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
         except FileNotFoundError:
             pass
+@bot.message_handler(commands=['start',"help"])
+def handle_start(message):
+    bot.reply_to(message, "Send me a file to add to IPFS, The file will be kept for one day, Please add the cid to @vsharecloud_bot to keep it permanently!")
 bot.infinity_polling()
 list_file = os.listdir(c.getkey("tmp_path"))
 for file in list_file:
