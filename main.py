@@ -60,7 +60,7 @@ def handle_docs(message):
     else:
         ret = ret.json()
         if "Hash" in ret:
-            bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`",parse_mode="Markdown")
+            bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse @vsharecloud_bot to keep it permanently\n使用 @vsharecloud_bot 以永久保存文件。",parse_mode="Markdown")
         else:
             bot.reply_to(message, "Error: "+ret)
     if not (c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}"):
@@ -97,7 +97,7 @@ def handle_photo(message):
     else:
         ret = ret.json()
         if "Hash" in ret:
-            bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`",parse_mode="Markdown")
+            bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse @vsharecloud_bot to keep it permanently\n使用 @vsharecloud_bot 以永久保存文件。",parse_mode="Markdown")
         else:
             bot.reply_to(message, "Error: "+ret)
     if not (c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}"):
