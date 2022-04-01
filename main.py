@@ -31,7 +31,7 @@ def genuuid():
     okey = str(ouid)
     return okey
 
-@bot.message_handler(content_types=['document','audio','video','photo'])
+@bot.message_handler(content_types=['document','audio','video','photo','sticker','voice','animation','video_note'])
 def handle_docs(message):
     stype =message.content_type
     try:
