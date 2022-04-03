@@ -27,7 +27,7 @@ class config:
     
     def save(self):
         import json
-        s = json.dumps(self.dic)
+        s = json.dumps(self.dic,indent=4)
         fp = open(self.filename,"w")
         fp.write(s)
         fp.close()
