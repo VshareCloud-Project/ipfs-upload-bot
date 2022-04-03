@@ -33,21 +33,38 @@ def genuuid():
 
 @bot.message_handler(content_types=['document','audio','video','photo','sticker','voice','animation','video_note'])
 def handle_docs(message):
+    new_message = bot.reply_to(message,"Processing: 0%")
     stype =message.content_type
     try:
         file_size = getattr(message,stype).file_size
         if file_size > c.getkey("maxium_size"):
-            bot.reply_to(message, "File size is too big")
+            bot.edit_message_text("File size is too big", new_message.chat.id, new_message.message_id)
             return
-        file_info = bot.get_file(getattr(message,stype).file_id)
+        n_file_id = getattr(message,stype).file_id
+        
     except:
         file_size = getattr(message,stype)[-1].file_size
         if file_size > c.getkey("maxium_size"):
-            bot.reply_to(message, "File size is too big")
+            bot.edit_message_text("File size is too big", new_message.chat.id, new_message.message_id)
             return
-        file_info = bot.get_file(getattr(message,stype)[-1].file_id)
+        n_file_id = getattr(message,stype)[-1].file_id
+    bot.edit_message_text("Processing: 10%", new_message.chat.id, new_message.message_id)
+    is_success_download = False
+    for i in range(0,5):
+        try:
+            file_info = bot.get_file(n_file_id)
+            is_success_download = True
+            break
+        except:
+            import traceback
+            logging.error(traceback.format_exc())
+    if not is_success_download:
+        bot.edit_message_text("Failed to download file", new_message.chat.id, new_message.message_id)
+        return
+    bot.edit_message_text("Processing: 40%", new_message.chat.id, new_message.message_id)
     if c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}":
         newfile = file_info.file_path
+        bot.edit_message_text("Processing: 70%", new_message.chat.id, new_message.message_id)
     else:
         #file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(c.getkey("telegram_api_token"), file_info.file_path))
         dl_url =  fileurl +"/"+ file_info.file_path
@@ -58,18 +75,21 @@ def handle_docs(message):
                 for chunk in req.iter_content(chunk_size=c.getkey("chunk_size")):
                     if chunk:
                         f.write(chunk)
+        bot.edit_message_text("Processing: 70%", new_message.chat.id, new_message.message_id)
     
     #params = urllib.parse.urlencode({"pin":True,"path":dl_url}, quote_via=urllib.parse.quote)
     ret = requests.post(c.getkey("ipfs_api_host")+"/api/v0/add?pin=true", files={'file': open(os.path.join(newfile), 'rb')},timeout=c.getkey("timeout"))
     if ret.status_code != 200:
-        bot.reply_to(message, "Error: "+ret.text)
+        bot.edit_message_text("Error: "+ret.text, new_message.chat.id, new_message.message_id)
         return
     else:
         ret = ret.json()
         if "Hash" in ret:
+            bot.edit_message_text("Processing: 100% , Preparing to show CID.", new_message.chat.id, new_message.message_id)
+            time.sleep(0.5)
             bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse @vsharecloud\_bot to keep it permanently\n使用 @vsharecloud\_bot 以永久保存文件。",parse_mode="Markdown")
         else:
-            bot.reply_to(message, "Error: "+ret)
+            bot.edit_message_text("Error: "+ret, new_message.chat.id, new_message.message_id)
     if not (c.getkey("telegram_bot_server") != "" and c.getkey("telegram_bot_server") is not None and c.getkey("telegram_bot_server") != "https://api.telegram.org/bot{0}/{1}"):
         try:
             os.remove(os.path.join(c.getkey("tmp_path"),nuuid))
