@@ -5,7 +5,7 @@ import sys
 parsing = argparse.ArgumentParser(description="Migration")
 parsing.add_argument("-c", "--config", help="Config file", default="config.json")
 parsing.add_argument("-l", "--log", help="Log file", default=None)
-parsing.add_argument("-y", "--yes", help="ignore problems",type=bool, default=False)
+parsing.add_argument("-y", "--yes", help="ignore problems", action="store_true")
 args = parsing.parse_args()
 c = configloader.config(filename=args.config)
 c_new = configloader.config(filename="config.example.json")
