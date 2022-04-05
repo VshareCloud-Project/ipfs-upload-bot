@@ -15,5 +15,6 @@
     "log_error_file":"/var/log/ipfs-upload-bot-error.log",
     "tmp_path":"/tmp/uploadbot",
     "chunk_size": 2000000,
-    "timeout":3600
+    "timeout":3600,
+    "vshare_bot_username":"vsharecloud_bot"
 }

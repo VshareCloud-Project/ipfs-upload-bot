@@ -101,7 +101,7 @@ def handle_docs(message):
             if "Hash" in ret:
                 bot.edit_message_text("Processing: 100% , Preparing to show CID.", new_message.chat.id, new_message.message_id)
                 time.sleep(0.5)
-                bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse @vsharecloud\_bot to keep it permanently\n使用 @vsharecloud\_bot 以永久保存文件。",parse_mode="Markdown")
+                bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse [@"+c.getkey("vshare_bot_username")+"](https://t.me/"+c.getkey("vshare_bot_username")+"?start="+ret["Hash"]+") to keep it permanently\n使用 [@"+c.getkey("vshare_bot_username")+"](https://t.me/"+c.getkey("vshare_bot_username")+"?start="+ret["Hash"]+") 以永久保存文件。",parse_mode="Markdown")
                 logging.info("Successfully processed %d from %d"%(message.message_id,message.from_user.id))
             else:
                 logging.error("Error when processing %d from %d: %s"%(message.message_id,message.from_user.id,ret))
