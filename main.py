@@ -101,7 +101,7 @@ def handle_docs(message):
             if "Hash" in ret:
                 bot.edit_message_text("Processing: 100% , Preparing to show CID.", new_message.chat.id, new_message.message_id)
                 time.sleep(0.5)
-                bot.reply_to(message, "Your CID is `"+ret["Hash"]+"`\nUse [@"+c.getkey("vshare_bot_username")+"](https://t.me/"+c.getkey("vshare_bot_username")+"?start="+ret["Hash"]+") to keep it permanently\n使用 [@"+c.getkey("vshare_bot_username")+"](https://t.me/"+c.getkey("vshare_bot_username")+"?start="+ret["Hash"]+") 以永久保存文件。",parse_mode="Markdown")
+                bot.reply_to(message, c.getkey("file_message").format(cid=ret["Hash"]),parse_mode="Markdown")
                 logging.info("Successfully processed %d from %d"%(message.message_id,message.from_user.id))
             else:
                 logging.error("Error when processing %d from %d: %s"%(message.message_id,message.from_user.id,ret))
@@ -117,7 +117,7 @@ def handle_docs(message):
 @bot.message_handler(commands=['start',"help"])
 def handle_start(message):
     logging.info("Start message %d from %d" %(message.message_id,message.from_user.id))
-    bot.reply_to(message, "Send me a file to add to IPFS, The file will be kept for one day, Please add the cid to @vsharecloud_bot to keep it permanently!\n给我发送文件以添加至IPFS网络，文件将保留一天，请将CID添加至 @vsharecloud_bot 以永久保存！")
+    bot.reply_to(message, c.getkey("welcome_message"))
 bot.infinity_polling()
 list_file = os.listdir(c.getkey("tmp_path"))
 for file in list_file:
